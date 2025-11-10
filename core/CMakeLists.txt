@@ -4,29 +4,35 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
 include(FetchContent)
 
-# asio
+# cpp-httplib
 FetchContent_Declare(
-    asio
-    GIT_REPOSITORY https://github.com/chriskohlhoff/asio.git
-    GIT_TAG asio-1-36-0
+    httplib
+    GIT_REPOSITORY https://github.com/yhirose/cpp-httplib.git
+    GIT_TAG v0.27.0
+    GIT_SHALLOW TRUE
 )
-FetchContent_MakeAvailable(asio)
+FetchContent_MakeAvailable(httplib)
 
-set(ASIO_INCLUDE_DIR ${asio_SOURCE_DIR}/asio/include)
-
-# crowcpp
+# fltk
 FetchContent_Declare(
-    crow
-    GIT_REPOSITORY https://github.com/CrowCpp/Crow.git
-    GIT_TAG v1.3.0
+    fltk
+    GIT_REPOSITORY https://github.com/fltk/fltk.git
+    GIT_TAG release-1.4.4
+    GIT_SHALLOW TRUE
 )
-FetchContent_MakeAvailable(crow)
+
+set(FLTK_BUILD_TEST OFF CACHE BOOL "" FORCE)
+set(FLTK_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(fltk)
 
 # webview
 FetchContent_Declare(
     webview
     GIT_REPOSITORY https://github.com/webview/webview
-    GIT_TAG 0.12.0)
+    GIT_TAG 0.12.0
+    GIT_SHALLOW TRUE
+)
 FetchContent_MakeAvailable(webview)
 
 if(APPLE)
@@ -40,8 +46,9 @@ add_executable(main
 )
 
 target_link_libraries(main PRIVATE
+    fltk::fltk
+    httplib::httplib
     webview::core
-    Crow::Crow
     ${PLATFORM_LIBS}
 )
 
