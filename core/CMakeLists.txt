@@ -16,7 +16,7 @@ FetchContent_MakeAvailable(httplib)
 # webview
 FetchContent_Declare(
     webview
-    GIT_REPOSITORY https://github.com/webview/webview
+    GIT_REPOSITORY https://github.com/webview/webview.git
     GIT_TAG 0.12.0
     GIT_SHALLOW TRUE
 )
@@ -38,12 +38,4 @@ target_link_libraries(main PRIVATE
     ${PLATFORM_LIBS}
 )
 
-set(PROJECT_WEB_ASSETS_DIR ${PROJECT_BINARY_DIR}/assets/web)
-
 target_compile_definitions(main PRIVATE WEB_ASSETS_DIR="${PROJECT_WEB_ASSETS_DIR}")
-
-# copy web assets after build
-add_custom_command(TARGET main POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${PROJECT_WEB_DIR}/dist/web/browser ${PROJECT_WEB_ASSETS_DIR}
-)

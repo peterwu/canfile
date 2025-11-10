@@ -1,3 +1,5 @@
+#include <format>
+
 #include "httplib.h"
 #include "menu.h"
 #include "webview.h"
@@ -53,7 +55,9 @@ bool wait_for_server(const std::string& host, int port, int timeout_sec = 10) {
 int main() {
   const int port = 4200;
 
+#ifdef __APPLE__
   setup_platform_menu("C++ WebView Example");  // Works everywhere
+#endif
 
   auto [http_server, server_thread] = start_server("0.0.0.0", port);
 
