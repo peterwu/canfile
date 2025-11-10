@@ -13,19 +13,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(httplib)
 
-# fltk
-FetchContent_Declare(
-    fltk
-    GIT_REPOSITORY https://github.com/fltk/fltk.git
-    GIT_TAG release-1.4.4
-    GIT_SHALLOW TRUE
-)
-
-set(FLTK_BUILD_TEST OFF CACHE BOOL "" FORCE)
-set(FLTK_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-
-FetchContent_MakeAvailable(fltk)
-
 # webview
 FetchContent_Declare(
     webview
@@ -46,7 +33,6 @@ add_executable(main
 )
 
 target_link_libraries(main PRIVATE
-    fltk::fltk
     httplib::httplib
     webview::core
     ${PLATFORM_LIBS}
