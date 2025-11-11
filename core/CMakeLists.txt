@@ -23,6 +23,10 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(webview)
 
 if(APPLE)
+    if(HOMEBREW_LLVM_PREFIX)
+        link_directories(${HOMEBREW_LLVM_PREFIX}/lib/c++)
+    endif()
+
     set(PLATFORM_SOURCES menu.mm)
     set(PLATFORM_LIBS "-framework Cocoa" "-framework WebKit")
 endif()
