@@ -2,8 +2,8 @@
 
 # Build directories
 BUILD_DIR := build
-DEBUG_DIR := build/debug
-RELEASE_DIR := build/release
+DEBUG_DIR := $(BUILD_DIR)
+RELEASE_DIR := $(BUILD_DIR)
 
 # Binary output
 BINARY := bin/main
@@ -17,7 +17,7 @@ all: release
 release:
 	@echo "Building release..."
 	@mkdir -p $(RELEASE_DIR)
-	@cd $(RELEASE_DIR) && cmake -GNinja -DCMAKE_BUILD_TYPE=Release ../..
+	@cd $(RELEASE_DIR) && cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
 	@cd $(RELEASE_DIR) && ninja
 	@echo "Release build complete: $(RELEASE_DIR)/$(BINARY)"
 
@@ -26,7 +26,7 @@ release:
 debug:
 	@echo "Building debug..."
 	@mkdir -p $(DEBUG_DIR)
-	@cd $(DEBUG_DIR) && cmake -GNinja -DCMAKE_BUILD_TYPE=Debug ../..
+	@cd $(DEBUG_DIR) && cmake -GNinja -DCMAKE_BUILD_TYPE=Debug ..
 	@cd $(DEBUG_DIR) && ninja
 	@echo "Debug build complete: $(DEBUG_DIR)/$(BINARY)"
 
