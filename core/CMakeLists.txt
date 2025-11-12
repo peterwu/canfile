@@ -24,7 +24,12 @@ FetchContent_MakeAvailable(webview)
 
 if(APPLE)
     if(HOMEBREW_LLVM_PREFIX)
-        link_directories(${HOMEBREW_LLVM_PREFIX}/lib/c++)
+        if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "x86_64")
+            set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "")
+        endif()
+
+        set(HOMEBREW_LIBCXX_INC ${HOMEBREW_LLVM_PREFIX}/include/c++/v1)
+        set(HOMEBREW_LIBCXX_LIB ${HOMEBREW_LLVM_PREFIX}/lib/c++)
     endif()
 
     set(PLATFORM_SOURCES menu.mm)
@@ -36,10 +41,16 @@ add_executable(main
     ${PLATFORM_SOURCES}
 )
 
+if(HOMEBREW_LLVM_PREFIX)
+    target_include_directories(main SYSTEM PRIVATE ${HOMEBREW_LIBCXX_INC})
+    target_link_directories(main PRIVATE ${HOMEBREW_LIBCXX_LIB})
+endif()
+
 target_link_libraries(main PRIVATE
     httplib::httplib
     webview::core
     ${PLATFORM_LIBS}
 )
 
-target_compile_definitions(main PRIVATE WEB_ASSETS_DIR="${PROJECT_WEB_ASSETS_DIR}")
+target_compile_definitions(main PRIVATE
+    WEB_ASSETS_DIR="${PROJECT_WEB_ASSETS_DIR}")
