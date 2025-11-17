@@ -2,7 +2,7 @@
 
 #include "httplib.h"
 #include "menu.h"
-#include "webview.h"
+#include "webview/webview.h"
 
 std::tuple<std::shared_ptr<httplib::Server>, std::unique_ptr<std::thread>>
 start_server(const std::string& host, int port) {
